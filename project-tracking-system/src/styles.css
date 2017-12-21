@@ -1,5 +1,7 @@
 /* Global Styles */
 
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
 body {
   margin-top: 100px;
   background-color: #222;
@@ -229,10 +231,4 @@ ul.alert-dropdown {
   max-width: 500px;
   height: auto;
   display: block
-}
-
-.form-error {
-  color: red;
-  padding-top: 2%;
-  padding-left: 10%;
 }
