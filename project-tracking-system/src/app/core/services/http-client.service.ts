@@ -1,52 +1,33 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { catchError } from "rxjs/operators";
 import { Observable } from "rxjs/Observable";
 import { ToastsManager } from 'ng2-toastr/ng2-toastr';
 
 @Injectable()
 export class HttpClientService {
-  private headers : HttpHeaders = new HttpHeaders({
-    'Content-Type': "application/json"
-  })
+  private headers = new HttpHeaders();
+
 
   constructor(
     private http: HttpClient,
     private toastr: ToastsManager
   ) { }
 
-  public get<T>(url : string) {
-    return this.http
-      .get<T>(url, { headers: this.headers })
-      .pipe(
-        catchError(err => this.handleError(err))
-      )
-  }
-  
-  public post<T>(url : string, body : any) {
-    return this.http
-      .post<T>(url, body ,{ headers: this.headers })
-      .pipe(
-        catchError(err => this.handleError(err))
-      )
+  get<T>(url:string, headers:any){
+    return this.http.get<T>(url, headers).pipe(catchError(err => this.handleError(err)))
   }
 
-  
-  public put<T>(url : string, body : any) {
-    return this.http
-      .put<T>(url, body ,{ headers: this.headers })
-      .pipe(
-        catchError(err => this.handleError(err))
-      )
+  post<T>(url:string, body: any, headers){
+    return this.http.post<T>(url, body, headers).pipe(catchError(err => this.handleError(err)))
   }
 
-  
-  public delete<T>(url : string, id : number) {
-    return this.http
-      .delete<T>(`${url}/${id}`, { headers: this.headers })
-      .pipe(
-        catchError(err => this.handleError(err))
-      )
+  put<T>(url:string, body: any){
+    return this.http.put<T>(url, body, {headers: this.headers}).pipe(catchError(err => this.handleError(err)))
+  }
+
+  delete<T>(url:string, id: any){
+    return this.http.delete<T>(url+'/'+id, {headers: this.headers}).pipe(catchError(err => this.handleError(err)))
   }
 
   private handleError(error : any) {
@@ -58,6 +39,6 @@ export class HttpClientService {
       // Other status codes needed in app 
     }
 
-    return Observable.throw(new Error(error.message));
+    return Observable.throw(new Error(error));
   }
 }

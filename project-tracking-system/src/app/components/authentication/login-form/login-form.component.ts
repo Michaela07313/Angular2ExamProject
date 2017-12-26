@@ -1,32 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { LoginInputModel } from '../../../core/models/input-models/login.input.model';
 import { AuthService } from '../../../core/services/authentication/auth.service';
-//import { LoginInputModel } from '../../../core/models/input-models/login.input.model';
-import { FormGroup, 
-  FormControl, 
-  FormBuilder, 
-  Validators, 
-  AbstractControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
+  selector: 'app-login-form',
   templateUrl: './login-form.component.html'
 })
-export class LoginFormComponent implements OnInit {
-  public loginForm : FormGroup;
+export class LoginFormComponent {
+  public model : LoginInputModel;
+  public loginFail : boolean;
+  public errorMessage :string;
 
-  constructor(private authService : AuthService, private fb : FormBuilder) { }
-
-  ngOnInit(): void {
-    this.loginForm = this.fb.group({
-      email: ['', [ 
-        Validators.required
-        //this.checkEmail.bind(this)
-      ]],
-      password: ['', [Validators.required]]
-    })
+  constructor(
+    private authService : AuthService,
+    private router : Router
+  ) {
+    this.model = new LoginInputModel("", "");
   }
 
-  login(e) {
-    console.log(e);
-    //this.authService.tryNavigate();
+  login () : void {
+    this.authService.login(this.model)
+      .subscribe(
+        data => {
+          console.log(data)
+          if(data.success == true) {
+            this.loginFail = false;
+            this.successfulLogin(data);
+          } else {
+            this.errorMessage = data.errorMessage;
+            this.loginFail = true;
+          }
+        },
+        err => {
+          this.loginFail = true;
+        }
+      )
+  }
+
+  successfulLogin(data) : void {
+    this.authService.authtoken = data['token'];
+    localStorage.setItem('authtoken', data['token']);
+    localStorage.setItem('name', data['user']['firstName']);
+    this.authService.tryNavigate();
+    //this.router.navigate(['/home']);
   }
 }

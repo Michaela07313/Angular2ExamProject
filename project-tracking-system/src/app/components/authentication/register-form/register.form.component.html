@@ -58,6 +58,10 @@
                       </div>
                   </fieldset>
               </form>
+              <br/>
+              <div *ngIf="registerFail" class="alert alert-danger">
+                  {{errorMessage}}
+              </div>
           </div>
       </div>
   </div>

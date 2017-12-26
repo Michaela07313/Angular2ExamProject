@@ -15,6 +15,10 @@ const emailRegex = '^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{
 export class RegisterFormComponent implements OnInit {
   public registerForm : FormGroup;
   public types : string[];
+  public registeredUser : string;
+  public registerSuccess : boolean;
+  public registerFail : boolean;
+  public errorMessage :string;
 
   constructor(private authService : AuthService, private fb : FormBuilder) {
     this.types = [ 'Employee', 'Team Leader'];
@@ -24,8 +28,7 @@ export class RegisterFormComponent implements OnInit {
     this.registerForm = this.fb.group({
       email: ['', [ 
         Validators.required, 
-        Validators.pattern(emailRegex), 
-        //this.checkEmail.bind(this)
+        Validators.pattern(emailRegex)
       ]],
       firstName: ['', [
         Validators.required, 
@@ -52,8 +55,41 @@ export class RegisterFormComponent implements OnInit {
     })
   }
 
-  register(e) {
-    console.log(e);
-    //this.authService.tryNavigate();
+  register(e) : void{
+    let userObject = {
+      email: this.registerForm.value.email,
+      password: this.registerForm.value.auth.password,
+      firstName: this.registerForm.value.firstName,
+      lastName: this.registerForm.value.lastName,
+      selectType: this.registerForm.value.selectType
+    }
+
+    if (this.registerForm.value.selectType === 'Team Leader') {
+      userObject['selectType'] = 'tl';
+    }
+
+    this.authService.register(userObject)
+    .subscribe(data => {
+        console.log(data);
+        if(data.success == true) {
+          this.registerFail = false;
+          this.successfulRegister(data);
+        } else {
+          this.errorMessage = data.errorMessage;
+          this.registerFail = true;
+        }
+      },
+      err => {
+        this.registerFail = true;
+      }
+    )
   }
+
+    successfulRegister(data) : void {
+      this.registerSuccess = true;
+      this.registeredUser = data['user']['firstName'];
+      this.authService.tryNavigate();
+    }
+
+    
 }

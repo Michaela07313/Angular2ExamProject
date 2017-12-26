@@ -6,9 +6,19 @@ import {Router} from '@angular/router';
 })
 
 export class HeaderComponent implements OnInit {
+  public user : string;
+
   constructor(
     private router : Router
-  ) { }
+  ) { 
+    this.user = localStorage.getItem('name');
+  }
 
   ngOnInit() { }
+
+  logout() {
+    console.log('tuk')
+    localStorage.clear();
+    this.router.navigate(['/'])
+  }
 }

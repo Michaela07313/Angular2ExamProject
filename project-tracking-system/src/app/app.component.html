@@ -12,9 +12,7 @@
                 </h1>
             </div>
         </div><!-- /.row -->
-        <!--{{#if errorMessage }}-->
-        <h2 class="errorText">errorMessage</h2>
-        <!--{{/if}}-->
+        <h2 *ngIf="errorMessage" class="errorText">{{errorMessage}}</h2>
         <router-outlet></router-outlet>
       </div><!-- /.container-fluid -->
     </div><!-- /#page-wrapper -->
