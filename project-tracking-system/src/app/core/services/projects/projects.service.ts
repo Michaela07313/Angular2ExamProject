@@ -27,7 +27,11 @@ export class ProjectsService {
     return this.httpService.get(httpUrl, headers);
   }
 
-  getById(id : string) : Project {
-    return this.projects.find(b => b.id === id);
+  getById(id : string) : Observable<any>{
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type','application/json');
+    let httpUrl:string = `http://localhost:7313/projects/details/${id}`;
+    return this.httpService.get(httpUrl, headers);
   }
 }

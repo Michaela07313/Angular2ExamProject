@@ -14,7 +14,7 @@
           </div>
           <a href="#">
               <div class="panel-footer">
-                  <span class="pull-left"><a [routerLink]="['/projects/details/', project.id]">View Details</a></span>
+                  <span class="pull-left"><a [routerLink]="['/projects/details/', project._id]">View Details</a></span>
               </div>
           </a>
       </div>
@@ -27,15 +27,3 @@
 
 
 
-
-
-<ul>
-  <li *ngFor="let book of books">
-    <div>
-      <strong>Book Title</strong> {{book.title}}
-    </div>
-    <div>
-      <a [routerLink]="['/books/details/', book.id]">Go To Details</a>
-    </div>
-  </li>
-</ul>
