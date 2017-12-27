@@ -3,8 +3,8 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginFormComponent } from './components/authentication/login-form/login-form.component';
 import { RegisterFormComponent } from './components/authentication/register-form/register.form.component';
 import { AuthGuard } from './core/guards/authentication/auth.guard';
-import { BooksListComponent } from './components/books/books-list/books.list.component';
-import { BookDetailsComponent } from './components/books/book-details/book-details.component';
+import { ProjectsListComponent } from './components/projects/projects-list/projects.list.component';
+import { ProjectDetailsComponent } from './components/projects/project-details/project-details.component';
 
 
 export const routes : Routes = [
@@ -12,6 +12,6 @@ export const routes : Routes = [
   { path: 'home', canActivate: [ AuthGuard ] , component: HomeComponent },
   { path: 'login', component: LoginFormComponent },
   { path: 'register', component: RegisterFormComponent },
-  { path: 'books', loadChildren: "app/components/books/books.module#BooksModule" }
+  { path: 'projects', loadChildren: "app/components/projects/projects.module#ProjectsModule" }
   //{ path: '**', component: PageNotFoundComponent }
 ]

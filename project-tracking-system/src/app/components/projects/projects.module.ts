@@ -2,16 +2,16 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
-import { bookComponents } from "./index";
-import { bookRoutes } from './books.routing';
+import { projectComponents } from "./index";
+import { projectRoutes } from './projects.routing';
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(bookRoutes)
+    RouterModule.forChild(projectRoutes)
   ],
   declarations: [
-    ...bookComponents
+    ...projectComponents
   ]
 })
-export class BooksModule {  }
+export class ProjectsModule {  }

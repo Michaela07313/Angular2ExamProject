@@ -1,0 +1,41 @@
+<div class="row" *ngIf="projects">
+  <div *ngFor="let project of projects" class="col-lg-3 col-md-6">
+      <div class="panel panel-green">
+          <div class="panel-heading">
+              <div class="row">
+                  <div class="col-xs-3">
+                      <i class="fa fa-tasks fa-5x"></i>
+                  </div>
+                  <div class="col-xs-9 text-right">
+                      <div class="huge">{{project.jobNumber}}</div>
+                      <div>{{project.title}}</div>
+                  </div>
+              </div>
+          </div>
+          <a href="#">
+              <div class="panel-footer">
+                  <span class="pull-left"><a [routerLink]="['/projects/details/', project.id]">View Details</a></span>
+              </div>
+          </a>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<ul>
+  <li *ngFor="let book of books">
+    <div>
+      <strong>Book Title</strong> {{book.title}}
+    </div>
+    <div>
+      <a [routerLink]="['/books/details/', book.id]">Go To Details</a>
+    </div>
+  </li>
+</ul>
