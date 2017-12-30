@@ -1,5 +1,5 @@
 export class Project {
-  public _id : string
+  
   public status : string
   public date : Date
   public updatedDate: Date

@@ -6,6 +6,8 @@ import {Http, Response, Headers, RequestOptions} from "@angular/http";
 import { Router } from "@angular/router";
 import { Observable } from 'rxjs/Observable';
 
+const baseUrl : string = 'http://localhost:7313/';
+
 @Injectable()
 export class AuthService {
   public redirectUrl : string;
@@ -19,21 +21,15 @@ export class AuthService {
 
   login(body):Observable<any> {
     const data = {email: body.email, password: body.password};
-    let httpUrl:string = 'http://localhost:7313/users/login';
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
+    let httpUrl:string = `${baseUrl}users/login`;
     this.redirectUrl = '/home';
-    return this.httpService.post(httpUrl, data, headers);
+    return this.httpService.post(httpUrl, data);
   }
 
   register(registerModel){
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = 'http://localhost:7313/users/register';
+    let httpUrl:string = `${baseUrl}users/register`;
     this.redirectUrl = '/login';
-    return this.httpService.post(httpUrl, registerModel, headers);
+    return this.httpService.post(httpUrl, registerModel);
   }
 
   isLoggedIn() : boolean {

@@ -5,6 +5,9 @@ import { Router } from "@angular/router";
 import { HttpClientService } from "../http-client.service";
 import { Observable } from "rxjs/Observable";
 
+const baseUrl : string = 'http://localhost:7313/';
+const createUrl : string = 'http://localhost:7313/projects/create';
+
 @Injectable()
 export class ProjectsService {
 
@@ -14,58 +17,63 @@ export class ProjectsService {
   ) { }
 
   getAll (): Observable<any> {
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = 'http://localhost:7313/';
-    return this.httpService.get(httpUrl, headers);
+    let httpUrl:string = baseUrl;
+    return this.httpService.get(httpUrl);
   }
 
   getById(id : string) : Observable<any>{
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = `http://localhost:7313/projects/details/${id}`;
-    return this.httpService.get(httpUrl, headers);
+    let httpUrl:string = `${baseUrl}projects/details/${id}`;
+    return this.httpService.get(httpUrl);
   }
 
   create(projectObject) : Observable<any> {
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = `http://localhost:7313/projects/create`;
-    return this.httpService.post(httpUrl, projectObject, headers);
+    let httpUrl : string = createUrl;
+    return this.httpService.post(httpUrl, projectObject);
   }
 
   createGet() : Observable<any> {
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = `http://localhost:7313/projects/create`;
-    return this.httpService.get(httpUrl, headers);
+    let httpUrl : string = createUrl;
+    return this.httpService.get(httpUrl);
   }
 
   editGet(id : string) : Observable<any> {
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = `http://localhost:7313/projects/edit/${id}`;
-    return this.httpService.get(httpUrl, headers);
+    let httpUrl:string = `${baseUrl}projects/edit/${id}`;
+    return this.httpService.get(httpUrl);
   }
 
   edit(projectObject, id : string) : Observable<any> {
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = `http://localhost:7313/projects/edit/${id}`;
-    return this.httpService.post(httpUrl, projectObject, headers);
+    let httpUrl:string = `${baseUrl}projects/edit/${id}`;
+    return this.httpService.put(httpUrl, projectObject);
   }
 
   delete(id : string) : Observable<any> {
-    let headers = new HttpHeaders();
-    headers.set('Accept', 'application/json');
-    headers.set('Content-Type','application/json');
-    let httpUrl:string = `http://localhost:7313/projects/delete/${id}`;
-    return this.httpService.post(httpUrl, id, headers);
+    let httpUrl:string = `${baseUrl}projects/delete/${id}`;
+    return this.httpService.delete(httpUrl);
   }
+
+  getAllComments(id : string) : Observable<any> {
+    let httpUrl:string = `${baseUrl}projects/comments/${id}`;
+    return this.httpService.get(httpUrl);
+  }
+
+  addComment(projectObject, id : string) : Observable<any> {
+    let httpUrl:string = `${baseUrl}projects/comments/${id}`;
+    return this.httpService.post(httpUrl, projectObject);
+  }
+
+  editCommentGet(pojectId : string, commentId : string) : Observable<any> {
+    let httpUrl:string = `${baseUrl}projects/comments/${pojectId}/editComment/${commentId}`;
+    return this.httpService.get(httpUrl);
+  }
+
+  editComment(commentObject, pojectId : string, commentId : string) : Observable<any> {
+    let httpUrl:string = `${baseUrl}projects/comments/${pojectId}/editComment/${commentId}`;
+    return this.httpService.put(httpUrl, commentObject);
+  }
+
+  deleteComment(pojectId : string, commentId: string) : Observable<any> {
+    let httpUrl:string = `${baseUrl}projects/comments/${pojectId}/deleteComment/${commentId}`;
+    return this.httpService.put(httpUrl, pojectId);
+  }
+  
 }

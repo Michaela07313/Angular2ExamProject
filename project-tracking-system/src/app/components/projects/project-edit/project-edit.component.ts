@@ -25,7 +25,8 @@ export class ProjectEditComponent implements OnInit {
     private router : Router,
     private projectsService : ProjectsService
   ) {
-    this.project = new Project("", 0, "", "","");
+    
+    this.project = new Project("", 0, "", "", "");
    }
 
   ngOnInit() {

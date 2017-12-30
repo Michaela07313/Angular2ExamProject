@@ -21,7 +21,7 @@ export class ProjectCreateComponent implements OnInit {
     private route : Router,
     private projectsService : ProjectsService
   ) {
-    this.model = new Project("", 0, localStorage.getItem('email'), localStorage.getItem('_id'),"");
+    this.model = new Project("", 0, localStorage.getItem('email'), localStorage.getItem('_id'), "");
    }
 
   ngOnInit() {

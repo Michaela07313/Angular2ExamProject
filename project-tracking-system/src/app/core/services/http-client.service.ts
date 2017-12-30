@@ -12,22 +12,25 @@ export class HttpClientService {
   constructor(
     private http: HttpClient,
     private toastr: ToastsManager
-  ) { }
-
-  get<T>(url:string, headers:any){
-    return this.http.get<T>(url, headers).pipe(catchError(err => this.handleError(err)))
+  ) { 
+    this.headers.set('Accept', 'application/json');
+    this.headers.set('Content-Type','application/json');
   }
 
-  post<T>(url:string, body: any, headers){
-    return this.http.post<T>(url, body, headers).pipe(catchError(err => this.handleError(err)))
+  get<T>(url:string){
+    return this.http.get<T>(url, {headers: this.headers}).pipe(catchError(err => this.handleError(err)))
+  }
+
+  post<T>(url:string, body: any){
+    return this.http.post<T>(url, body, {headers: this.headers}).pipe(catchError(err => this.handleError(err)))
   }
 
   put<T>(url:string, body: any){
     return this.http.put<T>(url, body, {headers: this.headers}).pipe(catchError(err => this.handleError(err)))
   }
 
-  delete<T>(url:string, id: any){
-    return this.http.delete<T>(url+'/'+id, {headers: this.headers}).pipe(catchError(err => this.handleError(err)))
+  delete<T>(url:string){
+    return this.http.delete<T>(url, {headers: this.headers}).pipe(catchError(err => this.handleError(err)))
   }
 
   private handleError(error : any) {

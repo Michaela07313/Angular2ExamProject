@@ -232,3 +232,25 @@ ul.alert-dropdown {
   height: auto;
   display: block
 }
+
+.postedCommentText {
+  text-align: center;
+  font-size: 18px;
+}
+
+.postedComment {
+    border: 1px solid black;
+    padding: 2%;
+    background: white;
+    border-radius: 4px;
+    margin: 2%;
+}
+
+.delete-comment-btn {
+  margin-top: -2%;
+  float: right;
+}
+
+.comment-info {
+  font-size: 13px;
+}
