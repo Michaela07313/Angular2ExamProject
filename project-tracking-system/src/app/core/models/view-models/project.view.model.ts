@@ -1,14 +1,16 @@
 export class Project {
+  public _id : string
+  public status : string
+  public date : Date
+  public updatedDate: Date
+  public comments : { email: string, content: string, commentDate: Date }[]
+
   constructor(
-    public id : string,
     public title : string,
     public jobNumber : number,
-    public status : string,
-    public date : Date,
-    public updatedDate: Date,
     public creator : string,
-    public worker : string,
-    public comments : { email: string, content: string, commentDate: Date }[]
+    public creatorId : string,
+    public selectWorker : string
   ) { }
 }
 

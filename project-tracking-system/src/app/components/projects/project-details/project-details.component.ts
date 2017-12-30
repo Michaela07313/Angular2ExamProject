@@ -10,6 +10,8 @@ import { ToastrService } from '../../../core/services/toastr/toastr.service';
 
 export class ProjectDetailsComponent implements OnInit {
   public project : Project;
+  public isCreator: boolean;
+  public isWorker: boolean;
 
   constructor(
     private route : ActivatedRoute,
@@ -23,10 +25,18 @@ export class ProjectDetailsComponent implements OnInit {
     .getById(id)
     .subscribe(data => {
       console.log(data);
-        this.project = data;
+      if(data.project.creator.email === localStorage.getItem('email')) {
+        this.isCreator = true;
+      }
+      if(data.project.worker.email === localStorage.getItem('email')){
+        this.isWorker = true;
+      }
+      this.project = data.project;
     },
       err => {
         console.log(err);
+        this.isCreator = false;
+        this.isWorker = false;
         this.toastr.errorToast((err.error.description ? err.error.description : 'Unknown error occured. Please try again'));
       });
     

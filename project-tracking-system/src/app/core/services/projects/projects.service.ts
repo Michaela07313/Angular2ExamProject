@@ -13,12 +13,6 @@ export class ProjectsService {
     private router : Router
   ) { }
 
-  projects : Project[] = [ 
-    /*new Book(1, "First Book", "First Author", 12, "Nice Description"),
-    new Book(2, "Second Book", "Second Book", 60, "Very cool description"),
-    new Book(3, "Third Book", "Third Author", 123, "Description")*/
-  ];
-
   getAll (): Observable<any> {
     let headers = new HttpHeaders();
     headers.set('Accept', 'application/json');
@@ -33,5 +27,45 @@ export class ProjectsService {
     headers.set('Content-Type','application/json');
     let httpUrl:string = `http://localhost:7313/projects/details/${id}`;
     return this.httpService.get(httpUrl, headers);
+  }
+
+  create(projectObject) : Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type','application/json');
+    let httpUrl:string = `http://localhost:7313/projects/create`;
+    return this.httpService.post(httpUrl, projectObject, headers);
+  }
+
+  createGet() : Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type','application/json');
+    let httpUrl:string = `http://localhost:7313/projects/create`;
+    return this.httpService.get(httpUrl, headers);
+  }
+
+  editGet(id : string) : Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type','application/json');
+    let httpUrl:string = `http://localhost:7313/projects/edit/${id}`;
+    return this.httpService.get(httpUrl, headers);
+  }
+
+  edit(projectObject, id : string) : Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type','application/json');
+    let httpUrl:string = `http://localhost:7313/projects/edit/${id}`;
+    return this.httpService.post(httpUrl, projectObject, headers);
+  }
+
+  delete(id : string) : Observable<any> {
+    let headers = new HttpHeaders();
+    headers.set('Accept', 'application/json');
+    headers.set('Content-Type','application/json');
+    let httpUrl:string = `http://localhost:7313/projects/delete/${id}`;
+    return this.httpService.post(httpUrl, id, headers);
   }
 }

@@ -42,6 +42,8 @@ export class LoginFormComponent {
     this.authService.authtoken = data['token'];
     localStorage.setItem('authtoken', data['token']);
     localStorage.setItem('name', data['user']['firstName']);
+    localStorage.setItem('email', data['user']['email']);
+    localStorage.setItem('_id', data['user']['_id']);
     this.authService.tryNavigate();
     //this.router.navigate(['/home']);
   }
