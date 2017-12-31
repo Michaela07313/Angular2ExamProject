@@ -26,6 +26,11 @@ export class ProjectsService {
     return this.httpService.get(httpUrl);
   }
 
+  getOwnProjects(id : string) : Observable<any>{
+    let httpUrl:string = `${baseUrl}projects/ownProjects/${id}`;
+    return this.httpService.get(httpUrl);
+  }
+
   create(projectObject) : Observable<any> {
     let httpUrl : string = createUrl;
     return this.httpService.post(httpUrl, projectObject);

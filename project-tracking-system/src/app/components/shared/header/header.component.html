@@ -16,7 +16,7 @@
               <a *ngIf="user" href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>Hello {{user}}!<b class="caret"></b></a>
               <ul *ngIf="user">
                   <li>
-                      <a routerLink="/profile"><i class="fa fa-fw fa-user"></i> Profile</a>
+                      <a routerLink="/users/profile/{{userId}}"><i class="fa fa-fw fa-user"></i> Profile</a>
                   </li>
                   <li class="divider"></li>
                   <li>
@@ -43,8 +43,8 @@
                 <li>
                     <a routerLink="/projects">All projects</a>
                 </li>
-                <li *ngIf="user">
-                    <a routerLink="/projects/ownProjects">Your projects</a>
+                <li *ngIf="userId">
+                    <a routerLink="/projects/ownProjects/{{userId}}">Your projects</a>
                 </li>
             </ul>
         </li>

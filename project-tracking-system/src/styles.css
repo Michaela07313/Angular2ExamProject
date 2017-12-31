@@ -228,7 +228,7 @@ ul.alert-dropdown {
 }
 
 .image-avatar {
-  max-width: 500px;
+  max-width: 220px;
   height: auto;
   display: block
 }
@@ -247,8 +247,14 @@ ul.alert-dropdown {
 }
 
 .delete-comment-btn {
-  margin-top: -2%;
+  margin-top: -5%;
   float: right;
+  background-color: #5cb85c;
+}
+
+
+.delete-comment-btn > a {
+  color: white;
 }
 
 .comment-info {

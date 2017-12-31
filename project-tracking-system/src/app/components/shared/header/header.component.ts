@@ -7,18 +7,21 @@ import {Router} from '@angular/router';
 
 export class HeaderComponent implements OnInit {
   public user : string;
+  public userId : string;
 
   constructor(
     private router : Router
   ) { 
-    this.user = localStorage.getItem('name');
+    
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.user = localStorage.getItem('name');
+    this.userId = localStorage.getItem('_id');
+  }
 
   logout() {
-    console.log('tuk')
     localStorage.clear();
-    this.router.navigate(['/'])
+    this.router.navigate(['/login'])
   }
 }

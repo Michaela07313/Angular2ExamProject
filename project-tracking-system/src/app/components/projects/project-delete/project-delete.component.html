@@ -39,14 +39,14 @@
                             <label class="col-sm-4 control-label" for="inputDate">Creatd on:</label>
                             <div class="col-sm-4 ">{{project.date | date: 'dd/MM/yyyy'}}</div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" *ngIf="project.updatedDate">
                             <label class="col-sm-4 control-label" for="inputUpdatedDate">Last updated on:</label>
                             <div class="col-sm-4 ">{{project.updatedDate | date: 'dd/MM/yyyy'}}</div>
                         </div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-4">
                                 <button type="reset" class="btn btn-default"><a routerLink="/projects/details/{{project._id}}">Cancel</a></button>
-                                <button type="submit" class="btn btn-primary">Delete</button>
+                                <button type="submit" class="btn btn-success">Delete</button>
                             </div>
                         </div>
                     </fieldset>
