@@ -29,16 +29,18 @@ export class UserProfileComponent implements OnInit {
       "");
   }
 
-  ngOnInit() {
-    this.authService
+  async ngOnInit() {
+    const getUserDetails = await this.authService
     .getUserProfile(this.id)
     .subscribe(data => {
       console.log(data);
       this.user = data.user;
     },
-      err => {
-        console.log(err);
-      });
+    err => {
+      console.log(err);
+    });
+
+    return getUserDetails;
   }
 
   upload() {

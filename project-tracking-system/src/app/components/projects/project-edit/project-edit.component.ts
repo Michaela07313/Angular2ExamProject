@@ -29,42 +29,42 @@ export class ProjectEditComponent implements OnInit {
     this.project = new Project("", 0, "", "", "");
    }
 
-  ngOnInit() {
+  async ngOnInit() {
    this.id = this.route.snapshot.params["id"];
-   this.projectsService
+   const getProjectInfo = await this.projectsService
    .editGet(this.id)
    .subscribe(data => {
      this.users = data.users;
      this.project = data.project;
      this.foundWorker = data.foundWorker.email;
    },
-     err => {
-       console.log(err);
-     });
+    err => {
+      console.log(err);
+    });
+
+    return getProjectInfo;
   }
 
   editProject () : void {
     this.projectsService.edit(this.project, this.id)
-      .subscribe(
-        data => {
-          if(data.success == true) {
-            this.editFail = false;
-            this.successfullEditRequest(data);
-          } else {
-            this.errorMessage = data.errorMessage;
-            this.editFail = true;
-          }
-        },
-        err => {
+    .subscribe(
+      data => {
+        if(data.success == true) {
+          this.editFail = false;
+          this.successfullEditRequest(data);
+        } else {
+          this.errorMessage = data.errorMessage;
           this.editFail = true;
-          this.errorMessage = 'Unknown error occured. Please try again';
         }
-      )
+      },
+      err => {
+        this.editFail = true;
+        this.errorMessage = 'Unknown error occured. Please try again';
+      }
+    );
   }
 
   successfullEditRequest(data) : void {
     this.router.navigateByUrl(`/projects/details/${this.id}`);
   }
-
-
 }

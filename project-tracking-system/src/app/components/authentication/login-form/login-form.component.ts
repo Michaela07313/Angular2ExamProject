@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginInputModel } from '../../../core/models/input-models/login.input.model';
 import { AuthService } from '../../../core/services/authentication/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -13,21 +12,21 @@ export class LoginFormComponent {
   public errorMessage :string;
 
   constructor(
-    private authService : AuthService,
-    private router : Router
+    private authService : AuthService
   ) {
     this.model = new LoginInputModel("", "");
   }
 
-  login () : void {
-    this.authService.login(this.model)
-      .subscribe(
-        data => {
-          console.log(data)
-          if(data.success == true) {
-            this.loginFail = false;
-            this.successfulLogin(data);
-          } else {
+  async login () : Promise<any> {
+    const logging = await this.authService
+    .login(this.model)
+    .subscribe(
+      data => {
+        console.log(data)
+        if(data.success == true) {
+          this.loginFail = false;
+          this.successfulLogin(data);
+        } else {
             this.errorMessage = data.errorMessage;
             this.loginFail = true;
           }
@@ -36,6 +35,8 @@ export class LoginFormComponent {
           this.loginFail = true;
         }
       )
+
+      return logging;
   }
 
   successfulLogin(data) : void {
@@ -45,6 +46,5 @@ export class LoginFormComponent {
     localStorage.setItem('email', data['user']['email']);
     localStorage.setItem('_id', data['user']['_id']);
     this.authService.tryNavigate();
-    //this.router.navigate(['/home']);
   }
 }

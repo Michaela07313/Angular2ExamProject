@@ -7,8 +7,7 @@ import { AuthModule } from './components/authentication/auth.module';
 import { SharedModule } from './components/shared/shared.module';
 import { GuardsModule } from './core/guards/guards.module';
 import { HttpClientModule } from "@angular/common/http";
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { CollapseModule } from 'ngx-bootstrap';
+
 
 
 // Components
@@ -31,9 +30,7 @@ import { routes } from './app.routing';
     ServiceModule,
     AuthModule,
     SharedModule,
-    GuardsModule,
-    BsDropdownModule.forRoot(),
-    CollapseModule.forRoot()
+    GuardsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -27,37 +27,41 @@ export class CommentEditComponent implements OnInit {
     this.updateCommentFail = true;
   }
 
-  ngOnInit() {
+  async ngOnInit() {
    this.projectId = this.route.snapshot.params["projectId"];
    this.commentId = this.route.snapshot.params["commentId"];
-   this.projectsService
+   const loadComment = await this.projectsService
    .editCommentGet(this.projectId, this.commentId)
    .subscribe(data => {
      this.currentComment = data.commentData[0].comments[0];
    },
-     err => {
-       console.log(err);
-     });
+    err => {
+      console.log(err);
+    });
+
+    return loadComment;
   }
 
-  editComment() {
+  async editComment() {
     let commentToUpdate = {
       content: this.newComment,
       commentAuthor: localStorage.getItem('_id')
     }
+    
+    const updatedComment = await this.projectsService
+    .editComment(commentToUpdate, this.projectId, this.commentId)
+    .subscribe(
+      data => {
+        console.log(data);
+        this.successfullUpdatedCommentRequest(data);
+      },
+      err => {
+        this.updateCommentFail = false;
+        this.errorMessage = 'Unknown error occured. Please try again';
+      }
+    )
 
-     this.projectsService
-     .editComment(commentToUpdate, this.projectId, this.commentId)
-       .subscribe(
-         data => {
-           console.log(data);
-           this.successfullUpdatedCommentRequest(data);
-         },
-         err => {
-           this.updateCommentFail = false;
-           this.errorMessage = 'Unknown error occured. Please try again';
-         }
-       )
+    return updatedComment;
   }
 
   successfullUpdatedCommentRequest(data) : void {
@@ -65,10 +69,9 @@ export class CommentEditComponent implements OnInit {
     this.router.navigateByUrl(`/projects/comments/${this.projectId}`);
   }
 
-  deleteComment() {
-    console.log(this.projectId)
-    console.log(this.commentId)
-    this.projectsService.deleteComment(this.projectId, this.commentId)
+  async deleteComment() {
+    const deletedComment = await this.projectsService
+    .deleteComment(this.projectId, this.commentId)
     .subscribe(
       data => {
         console.log(data);
@@ -78,6 +81,8 @@ export class CommentEditComponent implements OnInit {
         console.log(err);
       }
     )
+
+    return deletedComment;
   }
 
   successfullyDeletedCommentRequest() : void {

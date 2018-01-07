@@ -24,37 +24,37 @@ export class ProjectDeleteComponent implements OnInit {
     this.project = new Project("", 0, "", "","");
    }
 
-  ngOnInit() {
-   this.id = this.route.snapshot.params["id"];
-   this.projectsService
-   .getById(this.id)
-   .subscribe(data => {
-     this.project = data.project;
-   },
-     err => {
-       console.log(err);
-     });
-  }
+  async ngOnInit() {
+    this.id = this.route.snapshot.params["id"];
+    const getProjectInfo = await this.projectsService
+    .getById(this.id)
+    .subscribe(data => {
+      this.project = data.project;
+    },
+    err => {
+      console.log(err);
+    });
+
+    return getProjectInfo;
+}
 
   deleteProject () : void {
     this.projectsService.delete(this.id)
-      .subscribe(
-        data => {
-          if(data.success == true) {
-            this.successfullDelteRequest(data);
-          } else {
-            this.errorMessage = data.errorMessage;
-          }
-        },
-        err => {
-          this.errorMessage = 'Unknown error occured. Please try again';
+    .subscribe(
+      data => {
+        if(data.success == true) {
+          this.successfullDelteRequest(data);
+        } else {
+          this.errorMessage = data.errorMessage;
         }
-      )
+      },
+      err => {
+        this.errorMessage = 'Unknown error occured. Please try again';
+      }
+    );
   }
 
   successfullDelteRequest(data) : void {
     this.router.navigate(['/projects']);
   }
-
-
 }

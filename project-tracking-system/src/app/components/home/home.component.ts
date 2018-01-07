@@ -12,16 +12,17 @@ export class HomeComponent implements OnInit {
   constructor(
     private projectsService : ProjectsService) { }
 
-    ngOnInit() {
-      this.projectsService
+    async ngOnInit() {
+      const loadAllProjects = await this.projectsService
       .getOwnProjects(localStorage.getItem('_id'))
       .subscribe(data => {
-        console.log(data);
-          this.projects = data.projects.sort((a,b) => a.date >= b.date);
+        this.projects = data.projects.sort((a,b) => a.date >= b.date);
       },
-        err => {
-          this.projects = [];
-          console.log(err);
-        });
+      err => {
+        this.projects = [];
+        console.log(err);
+      });
+
+      return loadAllProjects;
     }
 }

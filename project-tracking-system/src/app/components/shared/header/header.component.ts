@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 export class HeaderComponent implements OnInit {
   public user : string;
   public userId : string;
+  public isCollapsed = true;
 
   constructor(
     private router : Router

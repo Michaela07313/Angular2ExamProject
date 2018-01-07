@@ -4,6 +4,7 @@ import { Project } from '../../../core/models/view-models/project.view.model';
 import { UserModel } from '../../../core/models/input-models/user.model';
 import { ProjectsService } from '../../../core/services/projects/projects.service';
 import { Route } from '@angular/router/src/config';
+import { Observable } from 'rxjs/Observable';
 
 
 @Component({
@@ -26,45 +27,48 @@ export class ProjectCommentsComponent implements OnInit {
     this.newComment = "";
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.id = this.route.snapshot.params["id"];
-    this.projectsService
+    const loadAllComments = await this.projectsService
     .getAllComments(this.id)
     .subscribe(data => {
-      console.log(data)
       this.project = data.project;
     },
-      err => {
-        console.log(err);
-      });
+    err => {
+      console.log(err);
+    });
+
+    return loadAllComments;
+  }
+   
+  async addComment () : Promise<any>{
+    let projectToUpdate = {
+      content: this.newComment,
+      commentAuthor: localStorage.getItem('_id')
     }
-   
-      addComment () : void {
-      let projectToUpdate = {
-        content: this.newComment,
-        commentAuthor: localStorage.getItem('_id')
-      }
 
-       this.projectsService
-       .addComment(projectToUpdate, this.id)
-         .subscribe(
-           data => {
-             console.log(data);
-             this.successfullAddCommentRequest(data);
-           },
-           err => {
-             this.addCommentFail = false;
-             this.errorMessage = 'Unknown error occured. Please try again';
-           }
-         )
-     }
-   
-     successfullAddCommentRequest(data) : void {
-       this.addCommentFail = true;
-       this.router.navigateByUrl(`/projects/details/${this.id}`);
-     }
+    const addCommentService = await this.projectsService
+    .addComment(projectToUpdate, this.id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.successfullAddCommentRequest(data);
+        },
+        err => {
+          this.addCommentFail = false;
+          this.errorMessage = 'Unknown error occured. Please try again';
+        }
+      )
 
-     clearComment() : void {
-       this.newComment = null;
-     }
+      return addCommentService;
+  }
+   
+  successfullAddCommentRequest(data) : void {
+    this.addCommentFail = true;
+    this.router.navigateByUrl(`/projects/details/${this.id}`);
+  }
+
+  clearComment() : void {
+    this.newComment = null;
+  }
 }

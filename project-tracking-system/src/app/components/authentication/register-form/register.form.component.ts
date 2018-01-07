@@ -55,7 +55,7 @@ export class RegisterFormComponent implements OnInit {
     })
   }
 
-  register(e) : void{
+  async register(e) : Promise<any>{
     let userObject = {
       email: this.registerForm.value.email,
       password: this.registerForm.value.auth.password,
@@ -68,7 +68,8 @@ export class RegisterFormComponent implements OnInit {
       userObject['selectType'] = 'tl';
     }
 
-    this.authService.register(userObject)
+    const registering = await this.authService
+    .register(userObject)
     .subscribe(data => {
         console.log(data);
         if(data.success == true) {
@@ -83,6 +84,8 @@ export class RegisterFormComponent implements OnInit {
         this.registerFail = true;
       }
     )
+
+    return registering;
   }
 
     successfulRegister(data) : void {
@@ -90,6 +93,4 @@ export class RegisterFormComponent implements OnInit {
       this.registeredUser = data['user']['firstName'];
       this.authService.tryNavigate();
     }
-
-    
 }
