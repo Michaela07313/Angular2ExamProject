@@ -27,8 +27,8 @@
                                     <div><b>Assigned to:</b> {{project.worker.firstName}} {{project.worker.lastName}}</div>
                                 </div>
                                 <div class="panel-footer">
-                                    <span *ngIf="isCreator || isWorker" class="pull-right"><a routerLink="/projects/comments/{{project._id}}">Review comments</a></span>
-                                    <span *ngIf="isCreator || isWorker" class="pull-left"><a  routerLink="/projects/edit/{{project._id}}">Update project information</a></span><br/>
+                                    <span *ngIf="isCreator || isWorker || isAdmin" class="pull-right"><a routerLink="/projects/comments/{{project._id}}">Review comments</a></span>
+                                    <span *ngIf="isCreator || isWorker || isAdmin" class="pull-left"><a  routerLink="/projects/edit/{{project._id}}">Update project information</a></span><br/>
                                     <span class="pull-right"><a routerLink="/projects">Go back</a></span>
                                     <span *ngIf="isCreator || isAdmin" class="pull-left"><a routerLink="/projects/delete/{{project._id}}">Delete</a></span>
                                     <br/>
