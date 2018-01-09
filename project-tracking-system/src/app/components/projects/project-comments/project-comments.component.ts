@@ -17,6 +17,7 @@ export class ProjectCommentsComponent implements OnInit {
   public id: string;
   public newComment : string;
   public addCommentFail: boolean;
+  public loadComments: boolean;
 
   constructor(
     private route : ActivatedRoute,
@@ -32,12 +33,18 @@ export class ProjectCommentsComponent implements OnInit {
     const loadAllComments = await this.projectsService
     .getAllComments(this.id)
     .subscribe(data => {
-      this.project = data.project;
+      if(data.success == true) {
+        this.project = data.project;
+        this.loadComments = false;
+      } else {
+        this.errorMessage = data.errorMessage;
+        this.loadComments = true;
+      }
     },
     err => {
       console.log(err);
     });
-
+    
     return loadAllComments;
   }
    

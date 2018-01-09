@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="!loadProjectData">
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -55,3 +55,4 @@
         </div>
     </div>
 </div>
+<div *ngIf="loadProjectData" class="alert alert-danger">{{errorMessage}}</div>

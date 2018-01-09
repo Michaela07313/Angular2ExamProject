@@ -45,11 +45,12 @@ export class AuthService {
     return this.http.post(`${baseUrl}users/profile/${id}`, formData, { headers: headers });
   }
 
-  isLoggedIn() : boolean {
-    let authtoken : string = localStorage.getItem('authtoken');
-    return authtoken === this.currentAuthtoken;
+  isLoggedIn() : Observable<any> {
+    let userID : string = localStorage.getItem('_id');
+    let httpUrl:string = `${baseUrl}users/${userID}`;
+    return this.http.get(httpUrl)
   }
-
+  
   get authtoken() {
     return this.currentAuthtoken;
   }

@@ -34,12 +34,19 @@ export class ProjectEditComponent implements OnInit {
    const getProjectInfo = await this.projectsService
    .editGet(this.id)
    .subscribe(data => {
-     this.users = data.users;
-     this.project = data.project;
-     this.foundWorker = data.foundWorker.email;
+    if(data.success == true) {
+      this.editFail = false;
+      this.users = data.users;
+      this.project = data.project;
+      this.foundWorker = data.foundWorker.email;
+    } else {
+      this.errorMessage = data.errorMessage;
+      this.editFail = true;
+    }
    },
     err => {
-      console.log(err);
+      this.editFail = true;
+      this.errorMessage = 'Unknown error occured. Please try again';
     });
 
     return getProjectInfo;

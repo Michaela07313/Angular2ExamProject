@@ -10,6 +10,7 @@ import { AuthService } from "../../services/authentication/auth.service";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
+  public errorMessage: String;
   constructor(
     private authService : AuthService,
     private router : Router
@@ -21,12 +22,30 @@ export class AuthGuard implements CanActivate {
   }
 
   checkIfLogged(url : string) {
-    if (this.authService.isLoggedIn()) {
-      return true;
+    const checkUser = this.authService.isLoggedIn()
+    .subscribe(data => {
+      console.log(data)
+      if(data.success == true) {
+        return true;
+      } else {
+        this.authService.redirectUrl = url;
+        this.router.navigate(["/login"]);
+        return false;
+      }
+    },
+    err => {
+      this.authService.redirectUrl = url;
+      this.router.navigate(["/login"]);
+      return false;
     }
+  )
 
+  if(checkUser) {
+    return true;
+  } else {
     this.authService.redirectUrl = url;
     this.router.navigate(["/login"]);
     return false;
   }
+}
 }

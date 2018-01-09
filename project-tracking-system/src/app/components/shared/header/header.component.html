@@ -15,11 +15,13 @@
       </button>
       <a class="navbar-brand" routerLink="/projects">Project Tracking System</a>
   </div>
+
+
   <!-- Top Menu Items -->
-  <ul class="nav navbar-right top-nav">
+  <ul class="nav navbar-right top-nav" *ngIf="isLoggedIn">
     <li ngbDropdown class="dropdown">
-        <div *ngIf="user" class="dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-user"></i>Hello {{user}}!<b class="caret"></b></div>
-        <ul ngbDropdownMenu aria-labelledby="dropdownBasic1" *ngIf="user">
+        <div class="dropdown-toggle" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-user"></i>Hello {{user}}!<b class="caret"></b></div>
+        <ul ngbDropdownMenu aria-labelledby="dropdownBasic1">
             <li>
                 <a routerLink="/users/profile/{{userId}}"><i class="fa fa-fw fa-user"></i> Profile</a>
             </li>
@@ -29,17 +31,22 @@
             </li>
         </ul>
     </li>
-    <li *ngIf="!user">
+  </ul>
+
+  <ul class="nav navbar-right top-nav" *ngIf="!isLoggedIn">
+    <li>
         <a routerLink="/register"><i class="fa fa-fw fa-user"></i> Register</a>
     </li>
-    <li *ngIf="!user">
+    <li>
         <a routerLink="/login"><i class="fa fa-fw fa-user"></i> Login</a>
     </li>
   </ul>
+
+
   <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
   <div class="collapse navbar-collapse navbar-ex1-collapse" [ngbCollapse]="isCollapsed">
       <ul class="nav navbar-nav side-nav">
-        <li *ngIf="user" class="active">
+        <li *ngIf="isLoggedIn" class="active">
             <a routerLink="/projects/create"><i class="fa fa-fw fa-dashboard">Create project</i></a>
         </li>
         <li>
@@ -54,11 +61,11 @@
         </div>
 
             <!--<a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i>Projects<i class="fa fa-fw fa-caret-down"></i></a>-->
-            <ul id="collapseExample" [ngbCollapse]="isCollapsed">
+            <ul id="collapseExample" [ngbCollapse]="isCollapsed" *ngIf="isLoggedIn">
                 <li>
                     <a routerLink="/projects">All projects</a>
                 </li>
-                <li *ngIf="userId">
+                <li>
                     <a routerLink="/projects/ownProjects/{{userId}}">Your projects</a>
                 </li>
             </ul>

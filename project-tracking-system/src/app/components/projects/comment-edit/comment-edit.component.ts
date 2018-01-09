@@ -15,6 +15,7 @@ export class CommentEditComponent implements OnInit {
   public currentComment: string;
   public newComment : string;
   public updateCommentFail: boolean;
+  public loadCommentFail: boolean;
 
 
   constructor(
@@ -33,7 +34,13 @@ export class CommentEditComponent implements OnInit {
    const loadComment = await this.projectsService
    .editCommentGet(this.projectId, this.commentId)
    .subscribe(data => {
-     this.currentComment = data.commentData[0].comments[0];
+    if(data.success == true) {
+      this.currentComment = data.commentData[0].comments[0];
+      this.loadCommentFail = false;
+    } else {
+      this.errorMessage = data.errorMessage;
+      this.loadCommentFail = true;
+    }
    },
     err => {
       console.log(err);
@@ -52,7 +59,6 @@ export class CommentEditComponent implements OnInit {
     .editComment(commentToUpdate, this.projectId, this.commentId)
     .subscribe(
       data => {
-        console.log(data);
         this.successfullUpdatedCommentRequest(data);
       },
       err => {
@@ -74,8 +80,13 @@ export class CommentEditComponent implements OnInit {
     .deleteComment(this.projectId, this.commentId)
     .subscribe(
       data => {
-        console.log(data);
-        this.successfullyDeletedCommentRequest();
+        if(data.success == true) {
+          this.successfullyDeletedCommentRequest();
+          this.loadCommentFail = false;
+        } else {
+          this.errorMessage = data.errorMessage;
+          this.loadCommentFail = true;
+        }
       },
       err => {
         console.log(err);

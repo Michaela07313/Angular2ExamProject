@@ -14,6 +14,7 @@ export class ProjectDeleteComponent implements OnInit {
   public project : Project;
   public errorMessage :string;
   public id: string;
+  public loadProjectData: boolean;
 
   constructor(
     private route : ActivatedRoute,
@@ -29,7 +30,13 @@ export class ProjectDeleteComponent implements OnInit {
     const getProjectInfo = await this.projectsService
     .getById(this.id)
     .subscribe(data => {
-      this.project = data.project;
+      if(data.success == true) {
+        this.project = data.project;
+        this.loadProjectData = false;
+      } else {
+        this.errorMessage = data.errorMessage;
+        this.loadProjectData = true;
+      }
     },
     err => {
       console.log(err);
@@ -45,10 +52,12 @@ export class ProjectDeleteComponent implements OnInit {
         if(data.success == true) {
           this.successfullDelteRequest(data);
         } else {
+          this.loadProjectData = true;
           this.errorMessage = data.errorMessage;
         }
       },
       err => {
+        this.loadProjectData = true;
         this.errorMessage = 'Unknown error occured. Please try again';
       }
     );
