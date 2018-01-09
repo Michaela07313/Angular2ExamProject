@@ -1,5 +1,5 @@
 <div *ngIf="loadProjectData">
-    <div class="row" *ngIf="projects">
+    <div class="row" *ngIf="projects.length > 0">
         <div class="col-lg-12">
             <h1 class="page-header">Your projects</h1>
         </div>
@@ -22,6 +22,11 @@
                     </div>
                 </a>
             </div>
+        </div>
+    </div>
+    <div class="row" *ngIf="projects.length === 0">
+        <div class="col-lg-12">
+            <h1 class="page-header">You don't own any projects</h1>
         </div>
     </div>
 </div>

@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
       const loadAllProjects = await this.projectsService
       .getOwnProjects(localStorage.getItem('_id'))
       .subscribe(data => {
+        console.log(data)
         if(data.success == true) {
           this.projects = data.projects;
           this.loadProjectData = true;
