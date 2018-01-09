@@ -83,8 +83,15 @@ module.exports = {
 
     User.findById(_id)
     .then(user => {
+      if (!user) {
+        return res.json({success: false, errorMessage: 'This user is not found.'})
+      }
+
       return res.json({success: true, user})
       //res.render('users/profile', {user: user})
+    })
+    .catch(err => {
+      return res.json({ success: false, errorMessage: '404 Page Not Found' }) 
     })
   },
   imgupload: (req, res, next) => {

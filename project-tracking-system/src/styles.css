@@ -227,6 +227,10 @@ ul.alert-dropdown {
   font-size: 20px;
 }
 
+.form-error {
+  color: red;
+}
+
 .image-avatar {
   max-width: 220px;
   height: auto;
