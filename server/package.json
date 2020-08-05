@@ -21,7 +21,7 @@
     "cookie-parser": "1.4.3",
     "cors": "^2.8.4",
     "express": "4.15.2",
-    "express-fileupload": "0.1.2",
+    "express-fileupload": "1.1.9",
     "express-session": "1.15.2",
     "handlebars-dateformat": "^1.0.1",
     "handlebars-helpers": "0.8.2",
